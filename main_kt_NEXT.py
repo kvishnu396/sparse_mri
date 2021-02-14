@@ -100,7 +100,7 @@ for epoch in range(0, num_epoch+1):
     train_err = 0
     train_batches = 0
 
-    for element in train_test_set.epoch_trainer(1,batch_size=batch_size):
+    for element in train_test_set.epoch_trainer(epoch,batch_size=batch_size):
         x_und, k_und, mask, x_gnd, xf_gnd = prep_input(element)
         print(x_und.shape,k_und.shape,mask.shape,x_gnd.shape,xf_gnd.shape)
         x_u = Variable(x_und.type(Tensor))
@@ -129,9 +129,8 @@ for epoch in range(0, num_epoch+1):
         epoch_psnr = []
     
         print("Testing!")
-
-        for im in iterate_minibatch(validate, batch_size, shuffle=False):
-            x_und, k_und, mask, x_gnd, xf_gnd = prep_input(im, acc)
+        for element in train_test_set.test_generator():#epoch_trainer(epoch,batch_size=batch_size):
+            x_und, k_und, mask, x_gnd, xf_gnd = prep_input(element)#im, acc)
             x_u = Variable(x_und.type(Tensor))
             k_u = Variable(k_und.type(Tensor))
             mask = Variable(mask.type(Tensor))
