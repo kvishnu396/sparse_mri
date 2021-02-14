@@ -5,7 +5,7 @@
 import multiprocessing as mp
 import numpy as np
 import time
-from sequential_dynamic_mri.utils.load_data import create_dataset
+from sequential_dynamic_mri.utils.load_data import create_dataset, init_load
 from sequential_dynamic_mri.utils.undersampling import var_dens_cartesian_mask, undersample
 from scipy.io import savemat, loadmat
 from numpy.matlib import repmat
@@ -17,12 +17,18 @@ poly_power = 4
 slice_samp_param = 'vert'
 
 
+#init load all data for seamless processing
+init_load()
+
+
 file_save = '/home/ddev/sparse_mri/'
 
 start = time.time()
 # create raw batch data
-img_batch, sen_batch, k_batch = create_dataset(file_save)
+img_batch, sen_batch, k_batch = create_dataset(5)
 print(img_batch.shape,sen_batch.shape,k_batch.shape)
+savemat("raw_batch.mat",{'img_batch':img_batch,'sen_batch':sen_batch,'k_batch':k_batch})
+
 print("Time Taken: ",time.time()-start)
 
 # complete undersampling

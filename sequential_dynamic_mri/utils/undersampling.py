@@ -9,7 +9,7 @@ import numpy.matlib
 def undersample(msk, img):
     msk_shape = msk.shape
     img_shape = img.shape
-    assert msk_shape == img_shape
+    assert msk_shape == img_shape, "Cannot undersample unequal size: Input " + str(img_shape) + " Msk " + str(msk.shape)
 
     return msk*img
 

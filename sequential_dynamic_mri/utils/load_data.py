@@ -16,6 +16,7 @@ directory = '/home/ddev/sparse_mri/sequential_dynamic_mri/cine_data/'
 # cardiac cine samples are mapped to index values for retrieval
 def index_cine_batch(directory):
     folders_cine = os.listdir(directory)
+    folders_cine.sort()
     mat_file_names = []
     mat_par_names = []
     for folder in folders_cine:
@@ -69,9 +70,9 @@ def load_cine_file(index, filename):
     return img, sen, k_data
 
 # aggregate cine samples
-def create_dataset(file_save,num_proc=10):
+def create_dataset(size,num_proc=10):
     index_mat_files, _ = index_cine_batch(directory)
-    data_list = [i for i,element in index_mat_files.items()][:5]
+    data_list = [i for i,element in index_mat_files.items()][:size]
     len_group = len(data_list)//num_proc + 1
     parts = [(index_mat_files, data_list[i:i+len_group]) for i in range(0,len(data_list), len_group)]
     pool = mp.Pool(processes=num_proc)
@@ -86,15 +87,16 @@ def create_dataset(file_save,num_proc=10):
             img_batch = np.concatenate((img_batch, img))#np.array([img])))
             sen_batch = np.concatenate((sen_batch, sen))#np.array([sen])))
             k_batch = np.concatenate((k_batch, k_data))#np.array([k_data])))
+    print("Created Dataset!")
     print(img_batch.shape,sen_batch.shape,k_batch.shape)
-    savemat(file_save+"raw_batch.mat",{'img_batch':img_batch,'sen_batch':sen_batch,'k_batch':k_batch})
    
     return img_batch, sen_batch, k_batch
 
-#test loading and processing images
-def test_load():
+#init loading and processing images
+def init_load():
     index_mat_files, index_par_files = index_cine_batch(directory)
     for index, filename in index_mat_files.items():
+        print("Index: ", index, "Loading File: ", filename)
         img, sen, ksp = load_cine_file(index, filename)
         print([img.shape,sen.shape,ksp.shape])
     print("Loaded all cine_files")
