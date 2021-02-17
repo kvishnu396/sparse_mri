@@ -27,7 +27,7 @@ train_pct = .75
 test_pct = 1 - train_pct
 num_samples = 40
 num_epoch = 10
-batch_size = 1
+batch_size = 5
 learning_rate = .001
 save_dir = os.path.join('models', 'ktnext')
 if not os.path.isdir(save_dir):

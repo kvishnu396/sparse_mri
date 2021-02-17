@@ -4,7 +4,7 @@
 import numpy as np
 import tensorflow as tf
 from scipy import signal
-from skimage.metrics import structural_similarity
+#from skimage.metrics import structural_similarity
 
 # calculation of mean squared for recon images
 def mse(recon, ground_truth):

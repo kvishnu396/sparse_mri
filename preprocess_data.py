@@ -18,7 +18,7 @@ slice_samp_param = 'vert'
 
 
 #init load all data for seamless processing
-init_load()
+#init_load()
 
 
 file_save = '/home/ddev/sparse_mri/'

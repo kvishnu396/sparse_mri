@@ -34,6 +34,8 @@ class train_test_module(object):
         num_iterations = len(self.train_index)//batch_size + 1
         for i in range(num_iterations):
             batch_index = self.train_index[batch_size*i:batch_size*(i+1)]
+            if len(batch_index) == 0:
+                continue
             print("Created training set: Epoch %d Batch %d" %(epoch,i))
             yield create_batch(self.index_mat_files, batch_index)
 
@@ -44,6 +46,8 @@ class train_test_module(object):
         print("Preparing Test data!")
         for i in range(num_iterations):
             batch_index = self.test_index[batch_size*i:batch_size*(i+1)]
+            if len(batch_index) == 0:
+                continue
             yield create_batch(self.index_mat_files, batch_index)
         
         
