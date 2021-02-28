@@ -16,15 +16,15 @@ save_loc = '/home/ddev/sparse_mri/results/postproc/'
 save_recon = '/home/ddev/sparse_mri/results/recon/'
 
 
-raw_cine = loadmat('raw_batch.mat') 
+#raw_cine = loadmat('raw_batch.mat') 
 raw_cine_us = loadmat('raw_batch_undersampled.mat') 
 
 # coil combine to establish ground truth
 # plot frames of ground truth
 ##########################################################################
-raw_cine = loadmat('raw_batch.mat') 
-img_batch = raw_cine['img_batch']
-sen_batch = raw_cine['sen_batch']
+#raw_cine = loadmat('raw_batch.mat') 
+img_batch = raw_cine_us['img_batch']
+sen_batch = raw_cine_us['sen_batch']
 num_samples, nx, ny, nc, nt = img_batch.shape
 gndtruth = []
 
@@ -50,19 +50,66 @@ recon_dict['under_4'] = ('undersample',np.array([coil_combine(img_4[i],sen_batch
 
 recon_dict['LS_4'] = ('L+S',loadmat(save_recon+'LS_4.mat')['LS_4'])
 recon_dict['grouse_4'] = ('GROUSE',loadmat(save_recon+'grouse_4.mat')['grouse_4'])
-#recon_dict['csistarnnmri_4'] = None
+#recon_dict['kt-NEXT_4'] = ('kt-NEXT',loadmat(save_recon+'kt_NEXT_4.mat')['kt_NEXT_4'])
+recon_dict['CSISTA-RNN-MRI_4'] = ('CSISTA-RNN-MRI',loadmat(save_recon+'csistarnnmri_4.mat')['csistarnnmri_4'])
 
 for label, val in recon_dict.items():
     recon_type, recon_img = val
     error_label = label + '_error'
     plot_frames(recon_img, batch_index, frames, save_loc, label, recon_type)
-    plot_error(recon_img, gndtruth, batch_index, frames, save_loc, label, recon_type)
+    plot_error(recon_img, gndtruth, batch_index, frames, save_loc, error_label, recon_type)
 
 print("Plotted frames and error image for 4 times undersampling!")
 
-plot_metrics(recon_dict, gndtruth, 4, save_loc)
+#plot_metrics(recon_dict, gndtruth, 4, save_loc)
+
+# 8 times undersampling
+##########################################################################
+print("Beginning 8 times undersampling...")
+recon_dict = {}
+k_8 = raw_cine_us['k_8']
+img_8 = np.array([k2img(k_8[i]) for i in range(num_samples)])
+recon_dict['under_8'] = ('undersample',np.array([coil_combine(img_8[i],sen_batch[i],index_coil=2) for i in range(num_samples)]))
+
+recon_dict['LS_8'] = ('L+S',loadmat(save_recon+'LS_8.mat')['LS_8'])
+recon_dict['grouse_8'] = ('GROUSE',loadmat(save_recon+'grouse_8.mat')['grouse_8'])
+#recon_dict['kt-NEXT_8'] = ('kt-NEXT',loadmat(save_recon+'kt_NEXT_8.mat')['kt_NEXT_8'])
+recon_dict['CSISTA-RNN-MRI_8'] = ('CSISTA-RNN-MRI',loadmat(save_recon+'csistarnnmri_8.mat')['csistarnnmri_8'])
 
 
+for label, val in recon_dict.items():
+    recon_type, recon_img = val
+    error_label = label + '_error'
+    plot_frames(recon_img, batch_index, frames, save_loc, label, recon_type)
+    plot_error(recon_img, gndtruth, batch_index, frames, save_loc, error_label, recon_type)
+
+print("Plotted frames and error image for 8 times undersampling!")
+
+#plot_metrics(recon_dict, gndtruth, 8, save_loc)
+
+# 12 times undersampling
+##########################################################################
+print("Beginning 12 times undersampling...")
+recon_dict = {}
+k_12 = raw_cine_us['k_12']
+img_12 = np.array([k2img(k_12[i]) for i in range(num_samples)])
+recon_dict['under_12'] = ('undersample',np.array([coil_combine(img_12[i],sen_batch[i],index_coil=2) for i in range(num_samples)]))
+
+recon_dict['LS_12'] = ('L+S',loadmat(save_recon+'LS_12.mat')['LS_12'])
+recon_dict['grouse_12'] = ('GROUSE',loadmat(save_recon+'grouse_12.mat')['grouse_12'])
+#recon_dict['kt-NEXT_12'] = ('kt-NEXT',loadmat(save_recon+'kt_NEXT_12.mat')['kt_NEXT_12'])
+recon_dict['CSISTA-RNN-MRI_12'] = ('CSISTA-RNN-MRI',loadmat(save_recon+'csistarnnmri_12.mat')['csistarnnmri_12'])
+
+
+for label, val in recon_dict.items():
+    recon_type, recon_img = val
+    error_label = label + '_error'
+    plot_frames(recon_img, batch_index, frames, save_loc, label, recon_type)
+    plot_error(recon_img, gndtruth, batch_index, frames, save_loc, error_label, recon_type)
+
+print("Plotted frames and error image for 12 times undersampling!")
+
+#plot_metrics(recon_dict, gndtruth, 12, save_loc)
 
 
 

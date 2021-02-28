@@ -1,6 +1,8 @@
 # Author: Vishnu Kaimal
 # define function to plot individual frames of DMRI
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -16,7 +18,7 @@ def plot_frames(batch_dmri, batch_index, frames, save_loc, label, recon_type):
         high = np.amax(curr_frame)
         low = np.amin(curr_frame)
         fname = save_loc + recon_type + '/' + label + '_' + str(i)+ '.png'
-        plt.imsave(fname,curr_frame,vmin=low,vmax=high)
+        plt.imsave(fname,curr_frame,vmin=low,vmax=high,cmap='gray')
         #plt.savefig(save_loc+label+'.png',bbox_inches='tight')
         #plt.clf()
         

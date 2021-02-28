@@ -1,6 +1,8 @@
 # Author: Vishnu Kaimal
 # define function to plot error plot for frames of DMRI
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -20,7 +22,7 @@ def plot_error(batch_dmri, batch_gndtruth, batch_index, frames, save_loc, label,
         high = np.amax(diff_frame)
         low = np.amin(diff_frame)
         fname = save_loc + recon_type + '/' + label + '_' + str(i)+ '.png'
-        plt.imsave(fname,diff_frame,vmin=low,vmax=high)
+        plt.imsave(fname,diff_frame,vmin=low,vmax=high,cmap='gray')
         #plt.savefig(save_loc+label+'.png',bbox_inches='tight')
         #plt.clf()
         
