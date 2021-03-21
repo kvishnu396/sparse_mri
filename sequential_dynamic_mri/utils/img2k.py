@@ -57,6 +57,14 @@ def dft_matrix(size):
     return fourier_matrix
 
 # image recombine with sensitivitiy coils
+def coil_combine_SENSE(img,sen,index_coil=3):
+    size_img = img.shape
+    size_sen = img.shape
+    assert size_img == size_sen, "Size mismatch between img and sen!"
+    
+    recon = np.sum(img*np.conjugate(sen),index_coil)/np.sum(abs(sen)**2,index_coil)
+    return recon
+
 def coil_combine(img,sen,index_coil=3):
     size_img = img.shape
     size_sen = img.shape
@@ -64,5 +72,6 @@ def coil_combine(img,sen,index_coil=3):
     
     recon = np.sum(img*np.conjugate(sen),index_coil)/np.sum(abs(sen)**2,index_coil)
     return recon
+
 
 

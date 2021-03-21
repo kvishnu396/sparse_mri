@@ -25,7 +25,7 @@ file_save = '/home/ddev/sparse_mri/'
 
 start = time.time()
 # create raw batch data
-img_batch, sen_batch, k_batch = create_dataset(5)
+img_batch, sen_batch, k_batch = create_dataset(1)
 print(img_batch.shape,sen_batch.shape,k_batch.shape)
 savemat("raw_batch.mat",{'img_batch':img_batch,'sen_batch':sen_batch,'k_batch':k_batch})
 

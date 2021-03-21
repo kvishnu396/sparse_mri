@@ -5,7 +5,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-from ..utils.score_metrics import mse, psnr, ssim
+from ..utils.score_metrics import mse, psnr, mssim, ssim
 
 # function to calculate and plot all score metrics
 # between ground truth and reconstructed image

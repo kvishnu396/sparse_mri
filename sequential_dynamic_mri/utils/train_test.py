@@ -49,6 +49,22 @@ class train_test_module(object):
             if len(batch_index) == 0:
                 continue
             yield create_batch(self.index_mat_files, batch_index)
+
+
+# prep input for training/testing
+def prep_input(batch,acc):
+    img_batch, sen_batch, k_batch = batch
+    num_samples, nx, ny, nc, nt = img_batch.shape
+    img_coil = coil_combine(img_batch,sen_batch)
+    k_coil = np.array([img2k(img_coil[i]) for i in range(num_samples)])
+    msk = var_dens_cartesian_mask((nx,ny), acc, acc, slice_samp='horiz')
+    msk = np.repeat(msk[:,:,np.newaxis],nt,axis=2)
+    msk = np.repeat(msk[np.newaxis,:,:,:],num_samples,axis=0)
+    k_und_coil = undersample(msk,k_coil)
+    img_und_coil = np.array([k2img(k_und_coil[i]) for i in range(num_samples)])
+
+    return im_und_l, k_und_l, mask_l, im_gnd_l, xf_gnd_l
+
         
         
         
