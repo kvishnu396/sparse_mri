@@ -55,11 +55,7 @@ recon_dict['under_4'] = ('undersample',np.array([coil_combine(img_4[i],sen_batch
 
 recon_dict['LS_4'] = ('L+S',loadmat(save_recon+'LS_4.mat')['LS_4'])
 recon_dict['grouse_4'] = ('GROUSE',loadmat(save_recon+'grouse_4.mat')['grouse_4'])
-#recon_dict['crnnmri_4'] = ('CRNN-MRI',loadmat(save_recon+'crnnmri_4.mat')['crnnmri_4'])
 recon_dict['sistamri_4'] = ('SISTA-MRI',loadmat(save_recon+'sistamri_4.mat')['sistamri_4'])
-
-#recon_dict['kt-NEXT_4'] = ('kt-NEXT',loadmat(save_recon+'kt_NEXT_4.mat')['kt_NEXT_4'])
-#recon_dict['CSISTA-RNN-MRI_4'] = ('CSISTA-RNN-MRI',loadmat(save_recon+'csistarnnmri_4.mat')['csistarnnmri_4'])
 
 for label, val in recon_dict.items():
     recon_type, recon_img = val
@@ -81,11 +77,7 @@ recon_dict['under_8'] = ('undersample',np.array([coil_combine(img_8[i],sen_batch
 
 recon_dict['LS_8'] = ('L+S',loadmat(save_recon+'LS_8.mat')['LS_8'])
 recon_dict['grouse_8'] = ('GROUSE',loadmat(save_recon+'grouse_8.mat')['grouse_8'])
-#recon_dict['crnnmri_8'] = ('CRNN-MRI',loadmat(save_recon+'crnnmri_8.mat')['crnnmri_8'])
 recon_dict['sistamri_8'] = ('SISTA-MRI',loadmat(save_recon+'sistamri_8.mat')['sistamri_8'])
-
-#recon_dict['kt-NEXT_8'] = ('kt-NEXT',loadmat(save_recon+'kt_NEXT_8.mat')['kt_NEXT_8'])
-#recon_dict['CSISTA-RNN-MRI_8'] = ('CSISTA-RNN-MRI',loadmat(save_recon+'csistarnnmri_8.mat')['csistarnnmri_8'])
 
 
 for label, val in recon_dict.items():
@@ -108,11 +100,7 @@ recon_dict['under_12'] = ('undersample',np.array([coil_combine(img_12[i],sen_bat
 
 recon_dict['LS_12'] = ('L+S',loadmat(save_recon+'LS_12.mat')['LS_12'])
 recon_dict['grouse_12'] = ('GROUSE',loadmat(save_recon+'grouse_12.mat')['grouse_12'])
-#recon_dict['crnnmri_12'] = ('CRNN-MRI',loadmat(save_recon+'crnnmri_12.mat')['crnnmri_12'])
 recon_dict['sistamri_12'] = ('SISTA-MRI',loadmat(save_recon+'sistamri_12.mat')['sistamri_12'])
-
-#recon_dict['kt-NEXT_12'] = ('kt-NEXT',loadmat(save_recon+'kt_NEXT_12.mat')['kt_NEXT_12'])
-#recon_dict['CSISTA-RNN-MRI_12'] = ('CSISTA-RNN-MRI',loadmat(save_recon+'csistarnnmri_12.mat')['csistarnnmri_12'])
 
 
 for label, val in recon_dict.items():

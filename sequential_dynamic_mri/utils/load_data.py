@@ -15,14 +15,16 @@ directory = '/home/ddev/sparse_mri/sequential_dynamic_mri/cine_data/'
 # indexing files training/test set based on appropriate parameters
 # cardiac cine samples are mapped to index values for retrieval
 def index_cine_batch(directory):
-    folders_cine = os.listdir(directory)
+    folders_cine = os.listdir(directory) 
+    folders_cine = [''] if '.mat' in folders_cine[0] else folders_cine
     folders_cine.sort()
     mat_file_names = []
     mat_par_names = []
     for folder in folders_cine:
         try:
-            files = [element for element in os.listdir(directory+folder) if '.mat' in element]
-            files = [directory+folder+'/'+element for element in files]
+            path_folder = os.path.join(directory,folder)
+            files = [element for element in os.listdir(path_folder) if '.mat' in element]
+            files = [os.path.join(path_folder,element) for element in files]
             [mat_par_names.append(element) if '_par' in element else mat_file_names.append(element) for element in files]
         except NotADirectoryError:
             pass
@@ -34,7 +36,7 @@ def index_cine_batch(directory):
 # function for individual process of file list for batch
 def create_batch(index_mat_files, batch_index):
     img_batch = sen_batch = k_batch = None
-    print("Creating batch with index set",batch_index,"...")
+    print("Creating batch with index set:",batch_index,"...")
     for index in batch_index:
         filename = index_mat_files[index]
         img, sen, k_data = load_cine_file(index, filename)
@@ -46,7 +48,7 @@ def create_batch(index_mat_files, batch_index):
             img_batch = np.concatenate((img_batch, np.array([img])))
             sen_batch = np.concatenate((sen_batch, np.array([sen])))
             k_batch = np.concatenate((k_batch, np.array([k_data])))
-    print(img_batch.shape, sen_batch.shape, k_batch.shape)
+    print("Batch size: ", img_batch.shape, sen_batch.shape, k_batch.shape)
     return img_batch, sen_batch, k_batch
     
 # load individual cine files and retrieve image and coil sensitivities
@@ -56,7 +58,6 @@ def load_cine_file(index, filename):
     data = loadmat(filename)   # load cine .mat file
     
     # retrieve data
-    print(data.keys())    
     img = data['img']
     sen = data['sen']
     #msk = data['msk']
